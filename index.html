@@ -1,0 +1,266 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<style>
+    .red{
+        background: red;
+    }
+    .yellow{
+        background: yellow;
+    }
+    .fontSize{
+        font-size: 32px;
+    }
+    .fontWeight{
+        font-weight: bold;
+    }
+</style>
+<body>
+  <div id="box">
+
+      <p>{{10 +20}}</p>
+      <p v-html="name"> {{name}}</p>
+      <p v-show="isShow">{{zhangqiwu}}</p>
+      <p v-show="!isCreate">{{zhangqiwu}} create</p>
+
+      <p :class="isRed?'red':'yellow'">{{zhangqiwu}}</p>
+      <button @click="changRed()">切换颜色</button>
+
+      <p :class="classObj">{{zhangqiwu}}classObj</p>
+      <p :class="classArr">{{zhangqiwu}}classArr</p>
+
+      <p :style="styleObj">{{zhangqiwu}}styleObj</p>
+
+      <p :style="styleArr">{{zhangqiwu}}styleArr</p>
+
+
+      <p v-if="isCreate">{{zhangqiwu}}</p>
+      <p v-else="isCreate">!{{zhangqiwu}}</p>
+
+      <ul v-if="listArr.length">
+          <li v-for="classa in listArr">
+              {{classa}}
+          </li>
+      </ul>
+     <div v-else>
+              购物车空空如也
+     </div>
+
+
+      <ul>
+          <li v-for="(data,index) in classArr">
+              {{index}}--{{data}}
+          </li>
+      </ul>
+
+
+      <ul>
+          <li v-for="(data,key) in classObj">
+              {{key}}--{{data}}
+          </li>
+      </ul>
+
+
+      <input type="text" @input="select()" v-model="myInput">
+      <ul @click="ulClick()">
+          <li v-for="(data,index) in numberList" @click.stop="liClick()">
+              {{index}}--{{data}}
+          </li>
+      </ul>
+
+      <input type="text" @keyup.enter="keyUpDo()">
+
+
+      </br>
+
+      <input type="checkbox" v-model="checkArr" value="1">1
+      <input type="checkbox" v-model="checkArr" value="2">2
+      <input type="checkbox" v-model="checkArr" value="3">3
+      {{checkArr}}
+
+
+
+      </br>
+      <input type="radio" v-model="radio_select" value="1">1
+      <input type="radio" v-model="radio_select" value="2">2
+      <input type="radio" v-model="radio_select" value="3">3
+      {{radio_select}}
+
+
+      </br>
+
+
+      <input type="checkbox" @change="is_select_all()"  v-model="isAll" >全选
+
+      <ul>
+          <li v-for="(data,index) in woodsList" :key="data.id">
+              <input type="checkbox" v-model="woodsListCheck" :value="data" @change="changewoodsListCheck()">
+              {{data}}
+              <button @click="number_down(data)">sub</button> {{data.number}} <button @click="number_up(data)">add</button>
+          </li>
+      </ul>
+      {{woodsListCheck}}
+      </br>
+      {{ getSum() }}
+
+
+      </br>
+
+
+
+      <input type="text" v-model="UserName">
+
+      <input type="text" v-model.lazy.trim="UserName">
+      |{{UserName}}|
+      </br>
+
+      <input type="text" v-model="PassWord">
+      {{PassWord}}
+      </br>
+
+
+      <button @click="getStartList()">明星</button>
+      <ul>
+          <li v-for="(data,index) in StartList">
+              {{data}}
+          </li>
+      </ul>
+  </div>
+
+</body>
+<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+<script>
+    fetch("list.json").then(res=>{
+        console.log(res);
+        return res.json()
+    }).then(res=>{
+        console.log(res);
+    })
+
+    var Vue_1 = new Vue({
+        el:'#box',
+        data:{
+            name : "<b>zhangqiwu</b>",
+            zhangqiwu : "张其武",
+            isShow:true,
+            isCreate:true,
+            isRed:true,
+            isAll:false,
+            classObj:{
+                fontSize:true,
+                fontWeight:true,
+            },
+            classArr:['fontSize','fontWeight'],
+            styleObj:{
+                background:"yellow",
+                fontSize:'22px'
+            },
+            styleArr:["background:yellow",  "fontSize:22px"],
+            listArr:[],
+            numberList:['aaa','av','ab','bb','cc'],
+            numberLista:['aaa','av','ab','bb','cc'],
+            myInput:'',
+            checkArr:[],
+            woodsListCheck:[],
+            radio_select:'',
+            woodsList:[
+                {
+                    id:1,
+                    price:2,
+                    number:3,
+                }, {
+                    id:2,
+                    price:1,
+                    number:4,
+                },
+                {
+                    id:3,
+                    price:5,
+                    number:1,
+                }
+            ],
+            UserName:'',
+            PassWord:'',
+            StartList:[],
+        },
+        methods:{
+            changRed: function () {
+                    this.isRed = !this.isRed,
+                    this.isCreate = !this.isCreate,
+                    this.listArr = this.styleArr,
+                    Vue.set(this.classArr, 0, 123)
+            },
+
+            select: function () {
+                console.log(this.myInput);
+
+                var temp = this.numberLista.filter(item => {
+                    return item.indexOf(this.myInput) > -1;
+                })
+                console.log(temp)
+                this.numberList = temp;
+            },
+
+            liClick: function () {
+                console.log("li")
+            },
+            ulClick: function () {
+                console.log("ul")
+            },
+            keyUpDo:function () {
+               console.log("回车输入")
+            },
+            getSum:function () {
+                var sum = 0;
+                for (var i in this.woodsListCheck){
+
+                    sum+= this.woodsListCheck[i].price * this.woodsListCheck[i].number;
+                }
+              return  sum;
+            },
+
+            is_select_all:function () {
+                console.log("改变了"+this.isAll);
+                if(this.isAll){
+                    this.woodsListCheck = this.woodsList;
+                }else{
+                    this.woodsListCheck = [];
+                }
+
+            },
+
+            changewoodsListCheck:function () {
+                  if( this.woodsListCheck.length === this.woodsList.length ){
+                      this.isAll = true ;
+                  }else{
+                      this.isAll = false ;
+                  }
+            },
+
+            number_down:function (data) {
+                if(data.number>1){
+                    data.number--;
+                }
+
+            },
+
+
+            number_up:function (data) {
+                data.number++;
+            },
+
+            getStartList:function () {
+              fetch("list.json").then(res=>res.json()).then(res=>{
+                      this.StartList =res['star_male'];
+              }
+
+              )
+            }
+
+        }
+    });
+</script>
+</html>
