@@ -111,6 +111,7 @@
 
 
 
+
       <input type="text" v-model="UserName">
 
       <input type="text" v-model.lazy.trim="UserName">
@@ -128,10 +129,21 @@
               {{data}}
           </li>
       </ul>
+
+
+
+      </br>
+      <button @click="getStartListAxios()">明星</button>
+      <ul>
+          <li v-for="(data,index) in StartList">
+              {{data}}
+          </li>
+      </ul>
   </div>
 
 </body>
 <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+<script src="https://unpkg.com/axios/dist/axios.min.js"></script>
 <script>
     fetch("list.json").then(res=>{
         console.log(res);

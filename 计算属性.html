@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<p>计算属性计算过一遍后，计算结果将会缓存，多次调用会使用缓存数据，方法每次调用每次计算，依赖数据改变，计算属性缓存将会重新计算</p>
+<div id="app">
+<p>{{myName.substring(0,1).toUpperCase()+myName.substring(1)}}</p>
+<p>{{myName}}</p>
+<p>计算属性computed</p>
+
+<p>{{UpFirstWord}}</p>
+<p>普通方法methods</p>
+<p>{{getUpFirstWord()}}</p>
+</div>
+
+</body>
+<script src="vue.js"></script>
+
+<script>
+    var vm = new Vue({
+        el:"#app",
+        data:{
+            myName:"ahri",
+        },
+        methods:{
+            getUpFirstWord:function () {
+                return this.myName.substring(0,1).toUpperCase()+this.myName.substring(1);
+            }
+        },
+        computed:{
+            UpFirstWord:function (myName) {
+                return this.myName.substring(0,1).toUpperCase()+this.myName.substring(1);
+            }
+        }
+    })
+</script>
+</html>

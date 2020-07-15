@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<div id="app">
+    <input type="text" v-model="KeyWord">{{KeyWord}}
+    <ul>
+        <li v-for="(row,index) in getMyList">
+            {{row}}--{{index}}
+        </li>
+    </ul>
+{{getMyList}}
+</div>
+
+</body>
+<script src="vue.js"></script>
+<script>
+    var vm = new Vue({
+        el:"#app",
+        data:{
+            KeyWord:"",
+            list:["11","1","12","23","21","122"],
+        },
+        methods:{
+
+        },
+        computed:{
+         getMyList(){
+             return this.list.filter(item=>{
+                 return item.indexOf(this.KeyWord)>-1;
+             });
+
+         }
+        }
+    })
+</script>
+</html>

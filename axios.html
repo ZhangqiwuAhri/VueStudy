@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<div id="app">
+    <button @click="getData()">axios</button>
+    <ul>
+        <li v-for="(row,index) in dataList">
+            {{index}}
+        </li>
+    </ul>
+
+</div>
+
+</body>
+
+<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+<script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+<script>
+    var vm = new Vue({
+        el:"#app",
+        data:{
+            dataList:[],
+        },
+        methods:{
+            getData:function () {
+              axios.get("list.json").then(res=>{
+                  console.log(res.data.star_male);
+                  this.dataList = res.data.star_male;
+              }).catch(error=>{
+                  console.log(error)
+              })
+            }
+        }
+    })
+</script>
+</html>
