@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>组件</title>
+</head>
+<body>
+<div id="app">
+   <navbar></navbar>
+
+
+    <sider></sider>
+    <childSider></childSider>
+
+</div>
+
+
+
+</body>
+<script src="vue.js"></script>
+<script>
+    Vue.component("navbar", {
+        template: `<div>
+                        <button  @click="back()">返回</button>
+                              navbar
+                          <button @click="home()">主页</button>
+                          <p>{{title}}</p>
+
+                           <child></child>
+
+                           <childSider></childSider>
+                   </div>`,
+
+        methods: {
+           back:function () {
+            console.log("i am back");
+           },
+
+            home:function () {
+                console.log("i am home");
+            },
+        },
+        components:{
+           childSider:{
+               template:'<p>childSider局部组件</p>',
+           }
+        },
+
+        data:function () {
+            return {
+                title:"ahri"
+            }
+        }
+    });
+
+
+    Vue.component("child", {
+        template: `<p>
+                     全局child组件
+                   </p>`,
+
+    });
+
+
+    Vue.component("sider", {
+        template: `<div>
+                     全局sider组件
+                      <child></child>
+                   </div>`,
+
+
+    });
+</script>
+<script>
+    var vm = new Vue({
+        el:"#app",
+        data:{
+
+        },
+        methods:{
+
+        },
+        computed:{
+
+        }
+    });
+</script>
+</html>
