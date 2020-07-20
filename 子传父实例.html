@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<div id="app">
+    <av @status_change="changeStatus()"></av>
+    <slide v-show="status"></slide>
+</div>
+</body>
+<script src="vue.js"></script>
+<script>
+
+    Vue.component("slide",{
+        template:` <ul>
+        <li>1111</li>
+        <li>2222</li>
+        <li>3333</li>
+    </ul>`,
+    })
+
+    Vue.component('av',{
+        template: `<button @click="changeStatus()">QQ头像</button>`,
+        methods: {
+            changeStatus:function () {
+                  this.$emit("status_change")
+            }
+        }
+    })
+
+    var  vm = new Vue({
+        el:"#app",
+        data:{
+           status:false
+        },
+        methods:{
+            changeStatus:function () {
+                 this.status = !this.status;
+            }
+
+        }
+    });
+</script>
+</html>
